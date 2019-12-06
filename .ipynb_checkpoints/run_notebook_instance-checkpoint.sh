@@ -9,6 +9,7 @@ TESTING_MODE="false"
 PARAM_FILE=""
 OUTPUT_DATE=""
 
+
 while getopts ":tp:o:" opt; do
   case ${opt} in
     t )
@@ -55,8 +56,8 @@ OUTPUT_NOTEBOOK_GCS_FOLDER=$(output_for_mode "${TESTING_MODE}" "${GCS_LOCATION}"
 OUTPUT_NOTEBOOK_GCS_PATH="${OUTPUT_NOTEBOOK_GCS_FOLDER}/${NOTEBOOK_NAME}"
 
 # This is in order to remove new line at the end of the string.
-API_KEY=`echo "${API_KEY}"`
+#API_KEY=`echo "${API_KEY}"`
 
 echo "Going to execute the following command"
-echo "execute_notebook -i ./${INPUT_NOTEBOOK} -o ${INPUT_NOTEBOOK_GCS_PATH} -m api_key=${API_KEY}${PARAM_METADATA:-} -g t4 -c 1"
-execute_notebook -i "./${INPUT_NOTEBOOK}" -o "${INPUT_NOTEBOOK_GCS_PATH}" -m "api_key=${API_KEY}${PARAM_METADATA:-}" -g t4 -c 1
+echo "execute_notebook -i ./${INPUT_NOTEBOOK} -o ${INPUT_NOTEBOOK_GCS_PATH} -g t4 -c 1 #-m api_key=${API_KEY}${PARAM_METADATA:-} -g t4 -c 1"
+execute_notebook -i "./${INPUT_NOTEBOOK}" -o "${INPUT_NOTEBOOK_GCS_PATH}" #-m "api_key=${API_KEY}${PARAM_METADATA:-}" -g t4 -c 1
