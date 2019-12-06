@@ -12,12 +12,12 @@ source gcp-notebook-executor/utils.sh
 # * GCS location that is used during background training
 # NOTE: your Cloud Build service account should have R/W access to GCS bucket. 
 INPUT_NOTEBOOK="demo.ipynb"
-GCS_LOCATION="gs://dmgcp-pkg-internal-poc-oct-04/cloud_build"
+GCS_LOCATION="gs://dl-platform-temp/notebook-ci-showcase"
 
 # In our demo notebook we are using an API_KEY environment variable, this is only specific for our demo
 # and very likely will not be needed in your case. Next line removes the new line at the end of the variable
 # before passing it to the actual execution.
-#API_KEY=`echo "${API_KEY}"`
+API_KEY=`echo "${API_KEY}"`
 
 # execute_notebook will return 0 or 1 depends on the status of the notebook.
-execute_notebook -i "./${INPUT_NOTEBOOK}" -o "${GCS_LOCATION}" -g t4 -c 1 #-m "api_key=${API_KEY}" -g t4 -c 1
+execute_notebook -i "./${INPUT_NOTEBOOK}" -o "${GCS_LOCATION}" -m "api_key=${API_KEY}" -g t4 -c 1
