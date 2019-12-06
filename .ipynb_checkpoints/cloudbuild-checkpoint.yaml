@@ -24,7 +24,7 @@ steps:
   # Secret is needed since we are using Google Map API Key in the Notebook. Notebook just reads the key from the env variables.
   # You can read more about Cloud Build Secrets here:
   # https://cloud.google.com/cloud-build/docs/securing-builds/use-encrypted-secrets-credentials
-  secretEnv: ['API_KEY'] 
+  #secretEnv: ['API_KEY'] 
 # ↑↑↑↑↑↑↑ End of Continuous Integration Part ↑↑↑↑↑↑↑↑↑↑↑↑↑###############
 ######### Execution will not process further if notebook is broken #####
 # ↓↓↓↓↓↓↓ Start of Continuous Delivery Part ↓↓↓↓↓↓↓↓↓↓↓↓ ################
@@ -40,7 +40,7 @@ steps:
   entrypoint: '/bin/bash'
   # Archive uploaded to the place where the production system expects it.
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'live.tar.gz', 'gs://dl-platform-temp/notebook-ci-showcase/live.tar.gz']
+  args: ['cp', 'live.tar.gz', 'gs://dmgcp-pkg-internal-poc-oct-04/cloud_build/live.tar.gz']
   dir: 'notebooks-ci-showcase'
   # Now we zipping folder with the cloud function that we want to use on a daily basis.
 - name: 'google/cloud-sdk:237.0.0'
@@ -49,14 +49,14 @@ steps:
   entrypoint: '/bin/bash'
   # Archive with cloud function uploaded to the place where the production system expects it.
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'deploy.zip', 'gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
+  args: ['cp', 'deploy.zip', 'gs://dmgcp-pkg-internal-poc-oct-04/cloud_build/deploy.zip']
   dir: 'notebooks-ci-showcase/deploy'
   # For the next step, the cloud build service account must be granted the Cloud Functions Developer permission (not default).
 - name: 'google/cloud-sdk:237.0.0'
   args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--trigger-topic=demo-notebook', '--region=us-central1', '--source=gs://dl-platform-temp/notebook-ci-showcase/deploy.zip']
 # ↑↑↑↑↑↑↑ End of Continues Delivery Part ↑↑↑↑↑↑↑↑↑↑↑↑↑##################
 ######### This part will generate actual artifact  #####################
-secrets:
-- kmsKeyName: projects/deeplearning-platform/locations/global/keyRings/api_key/cryptoKeys/google_maps_api
-  secretEnv:
-    API_KEY: CiQAqOZsWlDTXTRk/yjMO1BmEwto8Kboq90JG9zOuhizXsVO6fQSUQD7A7YryCuYQ+t6h9IL9Of6M+qCg/SezgvB/efTAGHhfzOYqa9mNMlECMo5hgnzpNjq6pPCauASAy8+VB+H4SLOfT9drLlpQTgxW3zTpAxtTQ==
+#secrets:
+#- kmsKeyName: projects/deeplearning-platform/locations/global/keyRings/api_key/cryptoKeys/google_maps_api
+#  secretEnv:
+#    API_KEY: CiQAqOZsWlDTXTRk/yjMO1BmEwto8Kboq90JG9zOuhizXsVO6fQSUQD7A7YryCuYQ+t6h9IL9Of6M+qCg/SezgvB/efTAGHhfzOYqa9mNMlECMo5hgnzpNjq6pPCauASAy8+VB+H4SLOfT9drLlpQTgxW3zTpAxtTQ==
