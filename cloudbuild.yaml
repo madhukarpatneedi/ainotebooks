@@ -51,9 +51,9 @@ steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', 'deploy.zip', 'gs://dmgcp-pkg-internal-poc-oct-04/cloud_build/deploy.zip']
   dir: 'ainotebooks/deploy'
-  # For the next step, the cloud build service account must be granted the Cloud Functions Developer permission (not default).
-- name: 'google/cloud-sdk:237.0.0'
-  args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--trigger-topic=demo-notebook', '--region=us-central1', '--source=gs://dmgcp-pkg-internal-poc-oct-04/cloud_build/deploy.zip']
+#   # For the next step, the cloud build service account must be granted the Cloud Functions Developer permission (not default).
+# - name: 'google/cloud-sdk:237.0.0'
+#   args: ['gcloud', 'functions', 'deploy', 'demo-notebook-function', '--trigger-topic=demo-notebook', '--region=us-central1', '--source=gs://dmgcp-pkg-internal-poc-oct-04/cloud_build/deploy.zip']
 # ↑↑↑↑↑↑↑ End of Continues Delivery Part ↑↑↑↑↑↑↑↑↑↑↑↑↑##################
 ######### This part will generate actual artifact  #####################
 # secrets:
