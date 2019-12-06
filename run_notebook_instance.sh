@@ -43,7 +43,7 @@ function output_for_mode() {
 
 INPUT_NOTEBOOK="demo.ipynb"
 NOTEBOOK_NAME=$(basename ${INPUT_NOTEBOOK})
-GCS_LOCATION="gs://dl-platform-temp/notebook-ci-showcase"
+GCS_LOCATION="gs://dmgcp-pkg-internal-poc-oct-04/cloud_build"
 INPUT_NOTEBOOK_GCS_PATH="${GCS_LOCATION}/staging/${BUILD_TIME}/${NOTEBOOK_NAME}"
 PARAM_METADATA=""
 if [[ ! -z ${PARAM_FILE} ]]; then
@@ -58,5 +58,5 @@ OUTPUT_NOTEBOOK_GCS_PATH="${OUTPUT_NOTEBOOK_GCS_FOLDER}/${NOTEBOOK_NAME}"
 API_KEY=`echo "${API_KEY}"`
 
 echo "Going to execute the following command"
-echo "execute_notebook -i ./${INPUT_NOTEBOOK} -o ${INPUT_NOTEBOOK_GCS_PATH} -m api_key=${API_KEY}${PARAM_METADATA:-} -g t4 -c 1"
-execute_notebook -i "./${INPUT_NOTEBOOK}" -o "${INPUT_NOTEBOOK_GCS_PATH}" -m "api_key=${API_KEY}${PARAM_METADATA:-}" -g t4 -c 1
+echo "execute_notebook -i ./${INPUT_NOTEBOOK} -o ${INPUT_NOTEBOOK_GCS_PATH} " #-m api_key=${API_KEY}${PARAM_METADATA:-} -g t4 -c 1"
+execute_notebook -i "./${INPUT_NOTEBOOK}" -o "${INPUT_NOTEBOOK_GCS_PATH}" -g t4 -c 1 # -m "api_key=${API_KEY}${PARAM_METADATA:-}"
